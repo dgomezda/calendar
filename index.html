@@ -5,12 +5,27 @@
   <title>Javascript Assessment</title>
 </head>
 <body>
-  <div>
-    <h1>Calendar</h1>
-    <div id="calendar-container">
-  </div>
+    <div class="calendar-header">
+      <form id="calendar-form">
+        <fieldset>
+            <legend>Calendar</legend>
+            <label for="email">Start Date:</label>
+            <input id="startDate" type="text" value="01/12/2008">
+            <label for="numDays">Number of days:</label>
+            <input id="numDays" type="text" value="97">
+            <label for="countryCode">Country Code:</label>
+            <input id="countryCode" type="text" value="US">
+            <button type="submit" id="generate-calendar" class="pure-button pure-button-primary">Generate Calendar</button>
+        </fieldset>
+      </form>
+    </div>
+    <div class="calendar-body">
+      <div id="calendar-container">
+      </div>
+    </div>
   <link rel = "stylesheet"  type = "text/css"  href = "main.css" />
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="main.js"></script>
 </body>
+
 </html>

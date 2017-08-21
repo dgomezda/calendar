@@ -1,4 +1,4 @@
-html, body, div, span, h1, h2, h3, p, a, form, nav, li, ul {
+html, body, div, span, h1, h2, h3, p, a, form, nav, li, ul, fieldset {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -17,6 +17,16 @@ ul {
 body {
   font-family: 'Lato',sans-serif;
   padding: 1em 0;
+}
+
+.calendar-header input, .calendar-header label,
+.calendar-header button{
+	display: block;
+  margin: .25em 0;
+	font-size: 1em;
+}
+.calendar-header legend{
+	font-size: 1.5em;
 }
 .month p {
 	margin-bottom: .5em;
