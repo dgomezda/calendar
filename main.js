@@ -5,23 +5,24 @@ function calendarWidget(widget, strStartDate, strnumDays, countryCode)
   var endDate = new Date(startDate);
   endDate.setDate(startDate.getDate() + numDays);
 
-
   $(widget).empty();
+   $(widget).append('<div class="month weekheader"><ul><li>S</li><li>M</li><li>T</li><li>W</li><li>T</li><li>F</li><li>S</li></ul></div>')
   var tempDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
   while (tempDate <= endDate) {
+    var holidays = [];
+    holidays = getHolidays(tempDate.getMonth()+1, tempDate.getFullYear());
     var invalidBefore = getInvalidBefore(startDate, tempDate);
     var invalidAfter = getInvalidAfter(endDate, tempDate);
-    addMonth(widget ,tempDate.getMonth(), tempDate.getFullYear(), invalidBefore, invalidAfter);
+    addMonth(widget ,tempDate.getMonth(), tempDate.getFullYear(), invalidBefore, invalidAfter, holidays);
     tempDate.setMonth(tempDate.getMonth()+1);
   }
 
-  function addMonth(widget, month, year, invalidBefore, invalidAfter){
+  function addMonth(widget, month, year, invalidBefore, invalidAfter, holidays){
       var days = getNumDays(month,year), // days per month
         fDay = getFirstDay(month,year)+1, // 1st day position, considering sunday.
         months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
       var monthElement = $("<ul class='group'></ul>")
-      $(monthElement).append('<li>S</li><li>M</li><li>T</li><li>W</li><li>T</li><li>F</li><li>S</li>')
       $(monthElement).append('<p class="monthname center">' + months[month] +' '+ year + '</p>')
 
       // put the first day in the correct position
@@ -67,6 +68,24 @@ function calendarWidget(widget, strStartDate, strnumDays, countryCode)
       ndays = getNumDays(endDate.getMonth(), endDate.getFullYear()) - endDate.getDate() +1
     }
     return ndays;
+  }
+  function getHolidays(month,year) {
+    var holidays = [];
+    $.ajax({
+       type: "GET",
+       dataType: "json",
+       url: "https://holidayapi.com/v1/holidays?key=c5cc9d69-95ea-4a9e-9476-25d0822b42db&country=PE&year="+ year +"&month=" + month,
+       async: false,
+       success: function(data){
+         if ( data.status == 200)
+         {
+           holidays = data.holidays.map(function (item,index) {
+                      return new Date(item.date.substr(0,4), item.date.substr(5,2)-1,  item.date.substr(8,2))
+                      });
+         }
+       }
+    });
+    return holidays;
   }
 }
 $( "#calendar-form" ).submit(function( event ) {
