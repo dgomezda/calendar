@@ -30,10 +30,10 @@ body {
 }
 .month p {
 	margin-bottom: .5em;
-	color: white;
+	color: gray;
 }
 .month {
-	background: gray;
+	background: white;
 	color: #ddd;
 	padding: .5em .5em 1em;
 	max-width: 20em;
