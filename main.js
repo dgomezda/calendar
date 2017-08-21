@@ -26,11 +26,17 @@ function calendarWidget(widget, strStartDate, strnumDays, countryCode)
 
       // put the first day in the correct position
       for (var i=0;i<fDay-1+invalidBefore;i++) {
-        $('<li>&nbsp;</li>').appendTo(monthElement);
+        $('<li class="invalidday">&nbsp;</li>').appendTo(monthElement);
       }
       // write day numbers in month
       for (var i = 1+ invalidBefore;i<=days - invalidAfter;i++) {
-        $('<li>'+i+'</li>').appendTo(monthElement);
+        if ((i + fDay -1 )%7 == 1  || (i + fDay -1) % 7 == 0){
+            $('<li class="weekend">'+i+'</li>').appendTo(monthElement);
+        }
+        else {
+            $('<li class="weekday">'+i+'</li>').appendTo(monthElement);
+        }
+
       }
       $(widget).append($("<div class='month'></div>").append(monthElement));
 
